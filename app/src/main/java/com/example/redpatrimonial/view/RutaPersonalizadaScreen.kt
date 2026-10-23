@@ -8,9 +8,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.redpatrimonial.navigation.Routes
 
 @Composable
-fun RutaPersonalizadaScreen() {
+fun RutaPersonalizadaScreen(navController: NavController) {
     val recintos = listOf(
         "Iglesia de San Francisco",
         "Catedral Metropolitana",
@@ -26,6 +28,12 @@ fun RutaPersonalizadaScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        TextButton(
+            onClick = { navController.navigate(Routes.RUTAS) }
+        ) {
+            Text("← Volver a rutas")
+        }
+
         Text(
             "Crear ruta personalizada",
             style = MaterialTheme.typography.headlineSmall
@@ -40,20 +48,27 @@ fun RutaPersonalizadaScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(recintos) { recinto ->
-                Card(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(recinto, modifier = Modifier.weight(1f))
+                        Text(
+                            recinto,
+                            modifier = Modifier.weight(1f)
+                        )
 
                         Checkbox(
                             checked = recinto in seleccionados,
                             onCheckedChange = { seleccionado ->
                                 if (seleccionado) {
-                                    seleccionados.add(recinto)
+                                    if (recinto !in seleccionados) {
+                                        seleccionados.add(recinto)
+                                    }
                                 } else {
                                     seleccionados.remove(recinto)
                                 }

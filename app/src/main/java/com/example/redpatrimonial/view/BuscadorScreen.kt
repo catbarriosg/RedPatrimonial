@@ -1,11 +1,27 @@
 
 package com.example.redpatrimonial.view
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -28,59 +44,81 @@ fun BuscadorScreen(navController: NavController) {
                 (comuna == "Todas" || comuna == ubicacion)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text("Buscar recintos", style = MaterialTheme.typography.headlineSmall)
-        TextButton(
-            onClick = { navController.navigate(Routes.MAPA) }
-        ) {
-            Text("← Volver al mapa")
+    Scaffold(
+        bottomBar = {
+            BarraNavegacion(navController)
         }
-        Spacer(modifier = Modifier.height(12.dp))
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
+            Text(
+                "Buscar recintos",
+                style = MaterialTheme.typography.headlineSmall
+            )
 
-        OutlinedTextField(
-            value = busqueda,
-            onValueChange = { busqueda = it },
-            label = { Text("Nombre del recinto") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text("Comuna", style = MaterialTheme.typography.titleMedium)
-
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf("Todas", "Santiago", "Recoleta").forEach { opcion ->
-                FilterChip(
-                    selected = comuna == opcion,
-                    onClick = { comuna = opcion },
-                    label = { Text(opcion) }
-                )
+            TextButton(
+                onClick = {
+                    navController.navigate(Routes.MAPA)
+                }
+            ) {
+                Text("← Volver al mapa")
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Text("Resultados: ${resultados.size}")
+            OutlinedTextField(
+                value = busqueda,
+                onValueChange = { busqueda = it },
+                label = { Text("Nombre del recinto") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(resultados) { (recinto, _) ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        navController.navigate(Routes.DETALLE_RECINTO)
-                    }
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                "Comuna",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Column {
+                androidx.compose.foundation.layout.Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(
-                        text = recinto,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    listOf("Todas", "Santiago", "Recoleta").forEach { opcion ->
+                        FilterChip(
+                            selected = comuna == opcion,
+                            onClick = { comuna = opcion },
+                            label = { Text(opcion) }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text("Resultados: ${resultados.size}")
+
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(resultados) { (recinto, _) ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            navController.navigate(Routes.DETALLE_RECINTO)
+                        }
+                    ) {
+                        Text(
+                            text = recinto,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
             }
         }

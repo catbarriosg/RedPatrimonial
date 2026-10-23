@@ -70,7 +70,7 @@ fun LoginScreen(
 
                 if(validador){
 
-                    navController.navigate(Routes.INICIO) {
+                    navController.navigate(Routes.MAPA) {
                         popUpTo(Routes.INICIO) { inclusive = true }
                     }
                 }else{

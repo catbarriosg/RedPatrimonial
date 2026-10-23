@@ -1,6 +1,7 @@
 package com.example.redpatrimonial.navigation
 
 object Routes {
+    const val LOGIN = "login"
     const val INICIO = "inicio"
     const val MAPA = "mapa"
     const val BUSCADOR = "buscador"
@@ -8,4 +9,5 @@ object Routes {
     const val EVENTOS = "eventos"
     const val RUTAS = "rutas"
     const val RUTA_PERSONALIZADA = "ruta_personalizada"
+    const val QR = "qr"
 }
