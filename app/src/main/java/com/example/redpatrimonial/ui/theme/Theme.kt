@@ -22,7 +22,15 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Blanco,
     onTertiary = Color(0xFF382900),
     onBackground = TextoClaro,
-    onSurface = TextoClaro
+    onSurface = TextoClaro,
+    primaryContainer = VerdeContenedorOscuro,
+    onPrimaryContainer = TextoClaro,
+    secondaryContainer = VerdeContenedorOscuro,
+    onSecondaryContainer = DoradoOscuro,
+    surfaceVariant = SuperficieOscura,
+    onSurfaceVariant = TextoClaroSecundario,
+    outline = TextoClaroSecundario,
+    outlineVariant = BordeOscuro
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -37,10 +45,29 @@ private val LightColorScheme = lightColorScheme(
     onBackground = TextoPrincipal,
     onSurface = TextoPrincipal,
     error = RojoError,
-    onError = Blanco
+    onError = Blanco,
+    // Sin estos colores Material usa sus morados por defecto en chips, interruptores y selecciones
+    primaryContainer = VerdeClaro,
+    onPrimaryContainer = VerdePatrimonial,
+    secondaryContainer = DoradoClaro,
+    onSecondaryContainer = CafePatrimonial,
+    tertiaryContainer = DoradoClaro,
+    onTertiaryContainer = TextoPrincipal,
+    surfaceVariant = VerdeMuyClaro,
+    onSurfaceVariant = TextoSecundario,
+    outline = TextoSecundario,
+    outlineVariant = BordeSuave
 )
 
 
+/**
+ * Tema Material 3 de la app. Elige el esquema de colores y se lo entrega a MaterialTheme,
+ * que lo comparte con todos los componentes (botones, chips, campos de texto).
+ * - darkTheme = false: por ahora la app siempre usa el tema claro.
+ * - dynamicColor = false: no usa los colores del fondo de pantalla del teléfono (Android 12+),
+ *   para mantener la paleta patrimonial.
+ * - content es la interfaz que recibe el tema (lambda @Composable).
+ */
 @Composable
 fun RedPatrimonialTheme(
     darkTheme: Boolean = false,

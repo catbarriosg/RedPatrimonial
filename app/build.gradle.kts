@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.redpatrimonial"
-        minSdk = 36
+        minSdk = 26
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -62,4 +62,16 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+
+    // Íconos Material para la barra inferior y las pantallas
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    // Cámara y lectura de códigos QR
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.mlkit.barcode.scanning)
+
+    // Generación del código QR de cada recinto
+    implementation(libs.zxing.core)
 }
